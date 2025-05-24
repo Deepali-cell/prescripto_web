@@ -14,7 +14,7 @@ export const Navbar = () => {
 
   // Check for admin or doctor tokens
   const isAdminOrDoctor =
-    localStorage.getItem("admintoken") || localStorage.getItem("doctortoken");
+    localStorage.getItem("atoken") || localStorage.getItem("doctortoken");
 
   return (
     <div className="bg-base-100 shadow-md px-4 md:px-10 py-2 border-b mb-20">
