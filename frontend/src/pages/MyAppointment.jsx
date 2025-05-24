@@ -93,23 +93,6 @@ export const MyAppointment = () => {
                     <h1 className="font-medium text-xl">
                       {doc.doctorData?.name || "No Name"}
                     </h1>
-                    <p className="text-sm">
-                      {doc.doctorData?.speciality || "No Speciality"}
-                    </p>
-                  </div>
-                  <div className="px-4 py-4">
-                    <h1 className="text-gray-500">
-                      Address : <br />
-                      <span className="text-sm text-black">
-                        {doc.doctorData?.address?.line1 ||
-                          "Address Line 1 not available"}
-                      </span>
-                      <br />
-                      <span className="text-sm text-black">
-                        {doc.doctorData?.address?.line2 ||
-                          "Address Line 2 not available"}
-                      </span>
-                    </h1>
                   </div>
                   <div className="px-4">
                     <h1 className="text-gray-500">
@@ -122,16 +105,6 @@ export const MyAppointment = () => {
                 </div>
               </div>
               <div className="mt-10 mr-10">
-                {!doc.cancelled && doc.payment && !doc.isCompleted && (
-                  <button className="border border-black bg-blue-500 text-white px-4 w-full py-2 my-2">
-                    Paid
-                  </button>
-                )}
-                {!doc.cancelled && !doc.payment && !doc.isCompleted && (
-                  <button className="border border-black hover:bg-blue-500 hover:text-white hover:scale-105 transition-all duration-300 px-4 w-full py-2 my-2">
-                    Pay Online
-                  </button>
-                )}
                 {!doc.cancelled && !doc.isCompleted && (
                   <button
                     className="border border-black hover:bg-red-500 hover:text-white hover:scale-105 transition-all duration-300 px-4 w-full py-2 my-2"
