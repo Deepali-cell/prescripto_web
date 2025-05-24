@@ -59,8 +59,7 @@ export const Navbar = () => {
             Contact
           </NavLink>
 
-          {/* Show only if user is not admin or doctor */}
-          {!isAdminOrDoctor && (
+          {isAdminOrDoctor && (
             <button
               className="bg-gray-800 text-white px-3 py-1 rounded"
               onClick={() => (window.location.href = "/admin/login")}
