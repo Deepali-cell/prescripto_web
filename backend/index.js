@@ -16,7 +16,11 @@ const __dirname = path.resolve();
 
 // middleware
 app.use(express.json());
-app.use(cors());
+const coreOptions = {
+  origin: "https://prescripto-6pcu.onrender.com",
+  credentials: true,
+};
+app.use(cors(coreOptions));
 
 // api endpoints
 app.use("/api/admin", adminRouter);
