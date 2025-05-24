@@ -1,52 +1,137 @@
 import { useContext } from "react";
-import { Login } from "./pages/Login";
+import { Routes, Route, Navigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { AdminContext } from "./context/AdminContext";
+
+// Components
 import { Navbar } from "./componenets/Navbar";
 import { Sidebar } from "./componenets/Sidebar";
-import { Route, Routes } from "react-router-dom";
+import { Login } from "./pages/Login";
+
+// Admin Pages
 import { Dashboard } from "./pages/Admin/Dashboard";
 import { AllAppointment } from "./pages/Admin/AllAppointment";
 import { AddDoctors } from "./pages/Admin/AddDoctors";
 import { DoctorsList } from "./pages/Admin/DoctorsList";
-import { DoctorContext } from "./context/DoctorContext";
+
+// Doctor Pages
 import { DoctorProfile } from "./pages/Doctor/DoctorProfile";
 import { DoctorAppointment } from "./pages/Doctor/DoctorAppointment";
 import { DoctorDashboard } from "./pages/Doctor/DoctorDashboard";
+import { ProtectedAdminRoute } from "../protection/ProtectedAdminRoute";
+import { ProtectedDoctorRoute } from "../protection/ProtectedDoctorRoute";
+import { PublicRoute } from "../protection/PublicRoute";
+import { DoctorContext } from "./context/DoctorContext";
+import { AdminContext } from "./context/AdminContext";
+
 const App = () => {
   const { atoken } = useContext(AdminContext);
   const { doctortoken } = useContext(DoctorContext);
-  return atoken || doctortoken ? (
-    <div>
-      <ToastContainer />
-      <Navbar />
-      <div className="flex items-start">
-        <Sidebar />
+  const isLoggedIn = atoken || doctortoken;
 
-        <Routes>
-          <Route path="/" element={<></>}></Route>
-          <Route path="/admindashboard" element={<Dashboard />}></Route>
-          <Route
-            path="/adminallappointments"
-            element={<AllAppointment />}
-          ></Route>
-          <Route path="/adminadddoctors" element={<AddDoctors />}></Route>
-          <Route path="/admindoctorslist" element={<DoctorsList />}></Route>
-          <Route path="/doctorprofile" element={<DoctorProfile />}></Route>
-          <Route
-            path="/doctorappointments"
-            element={<DoctorAppointment />}
-          ></Route>
-          <Route path="/doctordashboard" element={<DoctorDashboard />}></Route>
-        </Routes>
-      </div>
-    </div>
-  ) : (
-    <div>
-      <Login />
+  return (
+    <>
       <ToastContainer />
-    </div>
+      {isLoggedIn && (
+        <>
+          <Navbar />
+          <div className="flex items-start">
+            <Sidebar />
+            <div className="w-full">
+              <Routes>
+                {/* Admin Protected Routes */}
+                <Route
+                  path="/admin/admindashboard"
+                  element={
+                    <ProtectedAdminRoute>
+                      <Dashboard />
+                    </ProtectedAdminRoute>
+                  }
+                />
+                <Route
+                  path="/admin/adminallappointments"
+                  element={
+                    <ProtectedAdminRoute>
+                      <AllAppointment />
+                    </ProtectedAdminRoute>
+                  }
+                />
+                <Route
+                  path="/admin/adminadddoctors"
+                  element={
+                    <ProtectedAdminRoute>
+                      <AddDoctors />
+                    </ProtectedAdminRoute>
+                  }
+                />
+                <Route
+                  path="/admin/admindoctorslist"
+                  element={
+                    <ProtectedAdminRoute>
+                      <DoctorsList />
+                    </ProtectedAdminRoute>
+                  }
+                />
+
+                {/* Doctor Protected Routes */}
+                <Route
+                  path="/admin/doctorprofile"
+                  element={
+                    <ProtectedDoctorRoute>
+                      <DoctorProfile />
+                    </ProtectedDoctorRoute>
+                  }
+                />
+                <Route
+                  path="/admin/doctorappointments"
+                  element={
+                    <ProtectedDoctorRoute>
+                      <DoctorAppointment />
+                    </ProtectedDoctorRoute>
+                  }
+                />
+                <Route
+                  path="/admin/doctordashboard"
+                  element={
+                    <ProtectedDoctorRoute>
+                      <DoctorDashboard />
+                    </ProtectedDoctorRoute>
+                  }
+                />
+
+                {/* Default redirection */}
+                <Route
+                  path="/admin"
+                  element={
+                    atoken ? (
+                      <Navigate to="/admin/admindashboard" />
+                    ) : doctortoken ? (
+                      <Navigate to="/admin/doctordashboard" />
+                    ) : (
+                      <Navigate to="/admin/login" />
+                    )
+                  }
+                />
+              </Routes>
+            </div>
+          </div>
+        </>
+      )}
+
+      {!isLoggedIn && (
+        <Routes>
+          <Route
+            path="/admin/login"
+            element={
+              <PublicRoute>
+                <Login />
+              </PublicRoute>
+            }
+          />
+          <Route path="*" element={<Navigate to="/admin/login" />} />
+        </Routes>
+      )}
+    </>
   );
 };
 

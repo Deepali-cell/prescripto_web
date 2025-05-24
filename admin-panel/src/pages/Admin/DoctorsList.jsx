@@ -9,7 +9,6 @@ export const DoctorsList = () => {
       getalldoctors();
     }
   }, [atoken]);
-  console.log(doctors);
   return (
     <>
       <div className="mb-4">

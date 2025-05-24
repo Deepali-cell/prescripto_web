@@ -67,7 +67,7 @@ const logindoctor = async (req,res) =>{
       const {appointmentId} = req.body;
       const doctorId = req.doctorId;
       const appointment = await appointmentModal.findById(appointmentId);
-      console.log(appointmentId , + " " + doctorId);
+
 
       if(appointment && appointment.docId === doctorId){
         await appointmentModal.findByIdAndUpdate(appointmentId , {isCompleted : true});
@@ -86,7 +86,6 @@ const logindoctor = async (req,res) =>{
       const {appointmentId } = req.body;
       const doctorId = req.doctorId;
       const appointment = await appointmentModal.findById(appointmentId);
-      console.log(appointmentId , + " " + doctorId);
 
       if(appointment && appointment.docId === doctorId){
         await appointmentModal.findByIdAndUpdate(appointmentId , {cancelled : true});

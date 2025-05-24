@@ -27,7 +27,6 @@ const DoctorContextProvider = ({ children }) => {
 
       if (data.success) {
         setprofile(data.doctorData);
-        console.log(data.doctorData);
       } else {
         toast.error(data.message);
       }
@@ -50,8 +49,7 @@ const DoctorContextProvider = ({ children }) => {
       if (data.success) {
         setappointments(data.appointments);
       } else {
-        console.log(data.message);
-        toast.error(data.message);
+       toast.error(data.message);
       }
     } catch (error) {
       console.log(error);
@@ -111,10 +109,8 @@ const DoctorContextProvider = ({ children }) => {
         }
       );
       if (data.success) {
-        console.log(data.dashData);
         setdashdata(data.dashData);
       } else {
-        console.log(data.message);
         toast.error(data.message);
       }
     } catch (error) {

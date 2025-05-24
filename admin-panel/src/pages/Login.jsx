@@ -36,7 +36,6 @@ export const Login = () => {
           toast.success("doctor login successfully");
           localStorage.setItem("doctortoken", data.doctortoken);
           setdoctortoken(data.doctortoken);
-          console.log(data.doctortoken);
         } else {
           toast.error(data.message);
           console.log("invalid credientials");

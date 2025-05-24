@@ -15,7 +15,7 @@ export const Sidebar = () => {
           {atoken && (
             <ul className="flex flex-col gap-4 items-start justify-start">
               <NavLink
-                to={"/admindashboard"}
+                to={"/admin/admindashboard"}
                 className={({ isActive }) =>
                   `flex gap-2 px-2 py-2  ${
                     isActive
@@ -27,7 +27,7 @@ export const Sidebar = () => {
                 <img src={assets.home_icon} alt="" className="h-6" /> Dashboard
               </NavLink>
               <NavLink
-                to={"/adminallappointments"}
+                to={"/admin/adminallappointments"}
                 className={({ isActive }) =>
                   `flex gap-2 px-2 py-2 ${
                     isActive
@@ -40,7 +40,7 @@ export const Sidebar = () => {
                 Appointments
               </NavLink>
               <NavLink
-                to={"/adminadddoctors"}
+                to={"/admin/adminadddoctors"}
                 className={({ isActive }) =>
                   `flex gap-2 px-2 py-2  ${
                     isActive
@@ -53,7 +53,7 @@ export const Sidebar = () => {
                 Add Doctors
               </NavLink>
               <NavLink
-                to={"/admindoctorslist"}
+                to={"/admin/admindoctorslist"}
                 className={({ isActive }) =>
                   `flex gap-2 px-2 py-2   ${
                     isActive
@@ -70,7 +70,7 @@ export const Sidebar = () => {
           {doctortoken && (
             <ul className="flex flex-col gap-4 items-start justify-start">
               <NavLink
-                to={"/doctordashboard"}
+                to={"/admin/doctordashboard"}
                 className={({ isActive }) =>
                   `flex gap-2 px-2 py-2  ${
                     isActive
@@ -82,7 +82,7 @@ export const Sidebar = () => {
                 <img src={assets.home_icon} alt="" className="h-6" /> Dashboard
               </NavLink>
               <NavLink
-                to={"/doctorappointments"}
+                to={"/admin/doctorappointments"}
                 className={({ isActive }) =>
                   `flex gap-2 px-2 py-2 ${
                     isActive
@@ -95,7 +95,7 @@ export const Sidebar = () => {
                 Appointments
               </NavLink>
               <NavLink
-                to={"/doctorprofile"}
+                to={"/admin/doctorprofile"}
                 className={({ isActive }) =>
                   `flex gap-2 px-2 py-2 ${
                     isActive
