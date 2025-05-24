@@ -117,84 +117,109 @@ export const DoctorAppointment = ({ docId }) => {
     findDoctor();
     setSchedule(getNextSevenDaysWithAutoTimeSlots());
   }, [doctors, docId]);
+
   return (
     docInfo && (
-      <div className="md:px-20 mx-4">
-        <div className="flex gap-4">
+      <div className="px-4 md:px-20 py-10">
+        {/* Doctor Info Section */}
+        <div className="flex flex-col md:flex-row gap-6">
           <img
             src={docInfo.image}
             alt={docInfo.name}
-            className="bg-blue-500 h-[17em] w-[15em] rounded-md"
+            className="h-64 w-60 rounded-lg object-cover shadow-md"
           />
-          <div className="card bg-base-100 w-[50em] shadow-xl">
-            <div className="card-body flex">
-              <h2 className="card-title">
-                {docInfo.name}
-                <img src={assets.verified_icon} alt="" className="h-[1em]" />
-              </h2>
-              <h1>
-                {docInfo.degree} - {docInfo.speciality}
-                <div className="badge ml-2">{docInfo.experience}</div>
-              </h1>
-              <h1 className="text-gray-600 font-medium">About :-</h1>
-              <p>{docInfo.about}</p>
-              <h1 className="text-gray-600 font-medium">
-                Appointment fee :-{" "}
-                <span className="text-black">${docInfo.fees}</span>
-              </h1>
+          <div className="bg-white shadow-lg rounded-lg p-6 flex-1">
+            <h2 className="text-2xl font-semibold flex items-center gap-2">
+              {docInfo.name}
+              <img src={assets.verified_icon} alt="Verified" className="h-5" />
+            </h2>
+            <p className="text-lg mt-2">
+              {docInfo.degree} - {docInfo.speciality}
+              <span className="ml-2 inline-block bg-blue-100 text-blue-700 px-2 py-1 rounded text-sm">
+                {docInfo.experience}
+              </span>
+            </p>
+            <div className="mt-4">
+              <h3 className="text-gray-700 font-medium mb-1">About:</h3>
+              <p className="text-gray-600">{docInfo.about}</p>
+            </div>
+            <div className="mt-4">
+              <h3 className="text-gray-700 font-medium">
+                Appointment Fee:
+                <span className="text-black font-semibold ml-1">
+                  ${docInfo.fees}
+                </span>
+              </h3>
             </div>
           </div>
         </div>
-        <div className="flex gap-4 ml-80 mt-10">
-          {schedule.map(({ date, day }) => (
-            <div
-              key={date}
-              className="cursor-pointer border rounded-lg"
-              onClick={() => handleDateSelect(date)}
-            >
-              <div className="flex flex-col items-center px-[0.8em] pt-2">
-                <h1 className="text-xl">{day}</h1>
-                <p>{date}</p>
+
+        {/* Date Selection */}
+        <div className="mt-10">
+          <h3 className="text-xl font-semibold mb-4">Select a Date:</h3>
+          <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-7 gap-4">
+            {schedule.map(({ date, day }) => (
+              <div
+                key={date}
+                className={`cursor-pointer border rounded-md p-3 text-center transition-all duration-200 ${
+                  selectedDate === date
+                    ? "bg-blue-600 text-white"
+                    : "bg-white hover:bg-blue-100"
+                }`}
+                onClick={() => handleDateSelect(date)}
+              >
+                <h4 className="font-semibold">{day}</h4>
+                <p className="text-sm">{date}</p>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
+
+        {/* Time Slot Selection */}
         {selectedDate && (
-          <div className="ml-80 mt-10">
-            <h2 className="text-lg font-semibold">
+          <div className="mt-10">
+            <h3 className="text-xl font-semibold mb-4">
               Available Time Slots for {selectedDate}:
-            </h2>
-            <ul className="flex gap-4 mt-2">
+            </h3>
+            <div className="flex flex-wrap gap-3">
               {schedule
                 .find((day) => day.date === selectedDate)
                 .timeSlots.filter((slot) => !bookedSlots.has(slot))
                 .map((slot, index) => (
-                  <li
+                  <div
                     key={index}
-                    className="bg-gray-200 p-2 rounded-md cursor-pointer"
+                    className={`px-4 py-2 rounded-md cursor-pointer text-sm transition-all duration-200 ${
+                      selectedTime === slot
+                        ? "bg-green-600 text-white"
+                        : "bg-gray-200 hover:bg-gray-300"
+                    }`}
                     onClick={() => handleTimeSelect(slot)}
                   >
                     {slot}
-                  </li>
+                  </div>
                 ))}
-            </ul>
+            </div>
           </div>
         )}
-        <div className="ml-80 mt-10">
+
+        {/* Book Appointment Button */}
+        <div className="mt-10">
           <button
-            className="btn btn-primary bg-red-600 p-2 text-white rounded-md"
+            className="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg transition-all duration-200"
             onClick={bookAppointment}
           >
-            Book An Appointment
+            Book Appointment
           </button>
         </div>
-        <div className="text-center mt-20">
-          <h1 className="text-2xl font-medium">Related Doctors</h1>
-          <p className="mt-2">
-            Simply browse through our extensive list of trusted doctors.
+
+        {/* Related Doctors */}
+        <div className="mt-20 text-center">
+          <h1 className="text-2xl font-semibold">Related Doctors</h1>
+          <p className="mt-2 text-gray-600">
+            Browse through our list of trusted and verified professionals.
           </p>
         </div>
-        <div className="mt-20">
+        <div className="mt-10">
           <RelatedDoctors speciality={docInfo.speciality} docId={docId} />
         </div>
       </div>
