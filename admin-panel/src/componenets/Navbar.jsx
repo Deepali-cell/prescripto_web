@@ -22,9 +22,9 @@ export const Navbar = () => {
     }
   };
 
-  const goToFrontend = () => {
-       navigate("https://prescripto-web-frontend.onrender.com/");
-  };
+ const goToFrontend = () => {
+  window.location.href = "https://prescripto-web-frontend.onrender.com";
+};
 
   return (
     <div className="flex justify-between mx-10 my-4 items-center">
