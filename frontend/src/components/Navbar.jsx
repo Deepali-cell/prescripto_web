@@ -61,7 +61,7 @@ export const Navbar = () => {
        <button
   className="bg-gray-800 text-white px-3 py-1 rounded"
   onClick={() => {
-    window.location.href = "https://prescripto-web-admin-panel.onrender.com/admin/login";
+    window.location.href = "https://prescripto-web-admin-panel.onrender.com";
   }}
 >
   Go to Admin Panel
