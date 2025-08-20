@@ -23,7 +23,7 @@ export const Navbar = () => {
   };
 
   const goToFrontend = () => {
-    window.location.href = "/";
+       navigate("https://prescripto-web-frontend.onrender.com/");
   };
 
   return (
