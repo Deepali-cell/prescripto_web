@@ -129,6 +129,7 @@ export const AllDoctors = () => {
                 <div
                   className="card bg-base-100 display-block shadow-xl rounded-md hover:scale-105 duration-2000 transition"
                   onClick={() => navigate(`/appointment/${doctor._id}`)}
+                  key={doctor?._id}
                 >
                   <div>
                     <img

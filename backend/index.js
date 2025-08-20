@@ -17,7 +17,7 @@ const __dirname = path.resolve();
 // middleware
 app.use(express.json());
 const coreOptions = {
-  origin: "https://prescripto-6pcu.onrender.com",
+  origin: ["http://localhost:5173", "http://localhost:5174"], // frontend apps
   credentials: true,
 };
 app.use(cors(coreOptions));

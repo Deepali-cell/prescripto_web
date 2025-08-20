@@ -16,10 +16,13 @@ export const Speciality = () => {
             </p>
           </div>
           <div className="flex gap-4 mt-4">
-            {specialityData.map((item) => {
+            {specialityData.map((item, index) => {
               return (
                 <>
-                  <div className="flex flex-col justify-center items-center hover:translate-y-[-10px] transition-all duration-3000">
+                  <div
+                    className="flex flex-col justify-center items-center hover:translate-y-[-10px] transition-all duration-3000"
+                    key={index}
+                  >
                     <Link
                       onClick={() => scrollTo(0, 0)}
                       to={`/doctors/${item.speciality}`}

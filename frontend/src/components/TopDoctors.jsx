@@ -23,6 +23,7 @@ export const TopDoctors = () => {
                   <div
                     onClick={() => navigate(`/appointment/${doctor._id}`)}
                     className="card bg-base-100 display-block shadow-xl rounded-md hover:scale-105 duration-2000 transition"
+                    key={doctor._id}
                   >
                     <div>
                       <img
