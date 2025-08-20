@@ -25,6 +25,10 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 
+app.get("/", (req, res) => {
+  res.send("Backend is working ✅");
+});
+
 // api endpoints
 app.use("/api/admin", adminRouter);
 app.use("/api/doctor", doctorRouter);
