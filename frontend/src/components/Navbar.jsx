@@ -60,12 +60,15 @@ export const Navbar = () => {
           </NavLink>
 
           {isAdminOrDoctor && (
-            <button
-              className="bg-gray-800 text-white px-3 py-1 rounded"
-              onClick={() => (window.location.href = "/admin/login")}
-            >
-              Go to Admin Panel
-            </button>
+       <button
+  className="bg-gray-800 text-white px-3 py-1 rounded"
+  onClick={() => {
+    window.location.href = "https://prescripto-admin.onrender.com/admin/login";
+  }}
+>
+  Go to Admin Panel
+</button>
+
           )}
 
           {token && userData ? (
