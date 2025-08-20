@@ -12,9 +12,7 @@ export const Navbar = () => {
     localStorage.removeItem("usertoken");
   };
 
-  // Check for admin or doctor tokens
-  const isAdminOrDoctor =
-    localStorage.getItem("atoken") || localStorage.getItem("doctortoken");
+
 
   return (
     <div className="bg-base-100 shadow-md px-4 md:px-10 py-2 border-b mb-20">
@@ -59,7 +57,7 @@ export const Navbar = () => {
             Contact
           </NavLink>
 
-          {isAdminOrDoctor && (
+      
        <button
   className="bg-gray-800 text-white px-3 py-1 rounded"
   onClick={() => {
@@ -69,7 +67,7 @@ export const Navbar = () => {
   Go to Admin Panel
 </button>
 
-          )}
+        
 
           {token && userData ? (
             <>
