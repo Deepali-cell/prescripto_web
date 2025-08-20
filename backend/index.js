@@ -18,8 +18,8 @@ const corsOptions = {
   origin: [
     "http://localhost:5173", // dev frontend
     "http://localhost:5174", // dev admin
-    "https://prescripto-frontend.onrender.com", // deployed frontend
     "https://prescripto-admin.onrender.com", // deployed admin panel
+    "https://prescripto-web-frontend.onrender.com/",
   ],
   credentials: true,
 };
