@@ -8,8 +8,9 @@ export const Login = () => {
   const [state, setstate] = useState("admin");
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
+
   const { setatoken, backend_url } = useContext(AdminContext);
-  const { doctortoken, setdoctortoken } = useContext(DoctorContext);
+  const { setdoctortoken } = useContext(DoctorContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -20,12 +21,11 @@ export const Login = () => {
           password,
         });
         if (data.success) {
-          toast.success("admin login successfully");
+          toast.success("Admin login successful");
           localStorage.setItem("atoken", data.message);
           setatoken(data.message);
         } else {
           toast.error(data.message);
-          console.log("invalid credientials");
         }
       } else {
         const { data } = await axios.post(`${backend_url}/api/doctor/login`, {
@@ -33,12 +33,11 @@ export const Login = () => {
           password,
         });
         if (data.success) {
-          toast.success("doctor login successfully");
+          toast.success("Doctor login successful");
           localStorage.setItem("doctortoken", data.doctortoken);
           setdoctortoken(data.doctortoken);
         } else {
           toast.error(data.message);
-          console.log("invalid credientials");
         }
       }
     } catch (error) {
@@ -46,18 +45,28 @@ export const Login = () => {
       console.log(error);
     }
   };
+
   return (
     <>
-      <div className="md:px-10 mb-5 mx-20 mt-20 ">
+      <div className="flex justify-center px-4 md:px-10 mt-20 mb-10">
         <form
           onSubmit={handleSubmit}
-          className="border border-gray-300 rounded-lg px-10 py-2 mx-[22em]"
+          className="
+            w-full 
+            max-w-md 
+            bg-white 
+            border border-gray-300 
+            rounded-lg 
+            px-6 
+            py-8 
+            shadow-sm
+          "
         >
-          <div>
-            <h1 className="text-gray-500 font-medium text-2xl py-2">
-              {state === "doctor" ? "Doctor " : "Admin "}Login
-            </h1>
-          </div>
+          <h1 className="text-gray-700 font-semibold text-2xl mb-6 text-center">
+            {state === "doctor" ? "Doctor Login" : "Admin Login"}
+          </h1>
+
+          {/* Email Input */}
           <label className="input input-bordered flex items-center gap-2 my-4">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -69,13 +78,15 @@ export const Login = () => {
               <path d="M15 6.954 8.978 9.86a2.25 2.25 0 0 1-1.956 0L1 6.954V11.5A1.5 1.5 0 0 0 2.5 13h11a1.5 1.5 0 0 0 1.5-1.5V6.954Z" />
             </svg>
             <input
-              type="text"
-              className="grow px-2 py-2 w-full"
+              type="email"
+              className="grow px-2 py-2"
               placeholder="Email"
               onChange={(e) => setemail(e.target.value)}
               value={email}
             />
           </label>
+
+          {/* Password Input */}
           <label className="input input-bordered flex items-center gap-2 my-4">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -91,37 +102,38 @@ export const Login = () => {
             </svg>
             <input
               type="password"
-              className="px-2 py-2"
+              className="grow px-2 py-2"
+              placeholder="Password"
               onChange={(e) => setpassword(e.target.value)}
               value={password}
-              placeholder="password"
-            ></input>
+            />
           </label>
-          <div className="flex items-center justify-center my-4">
-            <button
-              type="submit"
-              className="bg-blue-500 px-10 rounded-md w-full  py-2 text-white  "
-            >
-              Login Account
-            </button>
-          </div>
-          {state === "doctor" ? (
-            <p
-              className="text-left cursor-pointer"
-              onClick={() => setstate("admin")}
-            >
-              Admin Login ?
-              <span className="text-blue-500 underline ml-2">Click here</span>
-            </p>
-          ) : (
-            <p
-              className="text-left cursor-pointer"
-              onClick={() => setstate("doctor")}
-            >
-              Doctor Login ?
-              <span className="text-blue-500 underline ml-2">Click here</span>
-            </p>
-          )}
+
+          {/* Login Button */}
+          <button
+            type="submit"
+            className="bg-blue-600 hover:bg-blue-700 w-full py-2 mt-6 text-white font-medium rounded-md transition"
+          >
+            Login Account
+          </button>
+
+          {/* Switch Login */}
+          <p
+            className="text-center mt-4 cursor-pointer text-sm"
+            onClick={() => setstate(state === "doctor" ? "admin" : "doctor")}
+          >
+            {state === "doctor" ? (
+              <>
+                Admin Login?
+                <span className="text-blue-500 underline ml-1">Click here</span>
+              </>
+            ) : (
+              <>
+                Doctor Login?
+                <span className="text-blue-500 underline ml-1">Click here</span>
+              </>
+            )}
+          </p>
         </form>
       </div>
     </>

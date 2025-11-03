@@ -6,51 +6,64 @@ export const RelatedDoctors = ({ speciality, docId }) => {
   const { doctors } = useContext(myContext);
   const navigate = useNavigate();
 
-  const [realtedDoc, setrelatedDoc] = useState([]);
+  const [relatedDoc, setRelatedDoc] = useState([]);
 
-  const handlerealtedoc = () => {
-    const realtedDoc = doctors.filter((doc) => doc.speciality === speciality);
-    setrelatedDoc(realtedDoc);
+  const filterRelatedDoctors = () => {
+    const docs = doctors.filter(
+      (doc) => doc.speciality === speciality && doc._id !== docId
+    );
+    setRelatedDoc(docs);
   };
+
   useEffect(() => {
-    handlerealtedoc();
+    filterRelatedDoctors();
   }, [doctors, docId, speciality]);
 
   return (
     <>
-      {" "}
-      <div className="grid gap-8 grid-cols-4 ">
-        {realtedDoc.map((doctor) => {
-          return (
-            <>
-              <div
-                key={doctor.name}
-                className="card bg-base-100 display-block shadow-xl rounded-md hover:scale-105 duration-2000 transition"
-                onClick={() => {
-                  navigate(`/appointment/${doctor._id}`);
-                  scrollTo(0, 0);
-                }}
-              >
-                <div>
-                  <img
-                    src={doctor.image}
-                    alt=""
-                    className="h-[15em] w-full bg-blue-100 rounded-md"
-                  />
-                </div>
-                <div className="px-4 py-4">
-                  {doctor.available ? (
-                    <h1 className="text-green-400 font-bold"> Available</h1>
-                  ) : (
-                    <h1 className="text-red-400 font-bold">Not Available</h1>
-                  )}
-                  <h1 className="font-medium text-xl">{doctor.name}</h1>
-                  <p className="text-[1em]">{doctor.speciality}</p>
-                </div>
-              </div>
-            </>
-          );
-        })}
+      <div
+        className="
+          grid 
+          grid-cols-1 
+          sm:grid-cols-2 
+          md:grid-cols-3 
+          lg:grid-cols-4 
+          gap-8
+        "
+      >
+        {relatedDoc.map((doctor) => (
+          <div
+            key={doctor._id}
+            className="
+              bg-white shadow-lg rounded-lg overflow-hidden 
+              hover:shadow-xl hover:scale-105 
+              transition-all duration-300 cursor-pointer
+            "
+            onClick={() => {
+              navigate(`/appointment/${doctor._id}`);
+              scrollTo(0, 0);
+            }}
+          >
+            {/* Doctor Image */}
+            <img
+              src={doctor.image}
+              alt={doctor.name}
+              className="h-56 w-full object-cover bg-blue-100"
+            />
+
+            {/* Content */}
+            <div className="px-4 py-4">
+              {doctor.available ? (
+                <p className="text-green-600 font-semibold">Available</p>
+              ) : (
+                <p className="text-red-500 font-semibold">Not Available</p>
+              )}
+
+              <h2 className="text-xl font-medium mt-1">{doctor.name}</h2>
+              <p className="text-gray-600 text-sm">{doctor.speciality}</p>
+            </div>
+          </div>
+        ))}
       </div>
     </>
   );

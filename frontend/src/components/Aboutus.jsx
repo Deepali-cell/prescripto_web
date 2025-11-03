@@ -4,22 +4,26 @@ import { Aboutus2 } from "./Aboutus2";
 export const Aboutus = () => {
   return (
     <>
-      <div className="md:px-10  mb-5 mx-20 ">
+      <div className="px-4 md:px-10 lg:px-20 mb-10 mt-10">
         <h1 className="text-2xl font-medium text-gray-600 text-center">
-          About us{" "}
+          About Us
         </h1>
-        <div className="flex mt-10">
-          <div>
+
+        <div className="flex flex-col md:flex-row mt-10 gap-10 items-center">
+          {/* Left Image */}
+          <div className="w-full md:w-1/2">
             <img
               src={assets.about_image}
               alt=""
-              className="h-[20em] w-[90em]"
+              className="w-full h-64 md:h-80 lg:h-96 object-cover rounded"
             />
           </div>
-          <div className="ml-20">
-            <p>
+
+          {/* Right Text */}
+          <div className="w-full md:w-1/2 text-center md:text-left">
+            <p className="text-gray-700 leading-relaxed">
               Welcome to Prescripto, your trusted partner in managing your
-              healthcare needs conveniently and efficiently.At Prescripto, we
+              healthcare needs conveniently and efficiently. At Prescripto, we
               understand the challenges individuals face when it comes to
               scheduling doctor appointments and managing their health records.
               <br />
@@ -42,6 +46,7 @@ export const Aboutus = () => {
             </p>
           </div>
         </div>
+
         <Aboutus2 />
       </div>
     </>

@@ -23,136 +23,74 @@ export const AllDoctors = () => {
     handlefilterdoctor();
   }, [doctors, speciality]);
 
+  const specialties = [
+    "General physician",
+    "Gynecologist",
+    "Dermatologist",
+    "Pediatricians",
+    "Neurologist",
+    "Gastroenterologist",
+  ];
+
   return (
-    <>
-      <div className="md:px-20 mx-4 flex">
-        <div className="left pr-10">
-          <div>
-            <h1 className="font-medium mb-4">
-              Browse through the doctors specialist.
-            </h1>
-            <div>
-              <ul>
-                <li
-                  className={`border text-left py-1 cursor-pointer px-3 rounded-lg my-4 ${
-                    speciality === "General physician"
-                      ? "bg-indigo-100 text-black"
-                      : ""
-                  } `}
-                  onClick={() =>
-                    speciality === "General physician"
-                      ? navigate("/doctors")
-                      : navigate("/doctors/General physician")
-                  }
-                >
-                  General physician
-                </li>
-                <li
-                  className={`border text-left py-1 cursor-pointer px-3 rounded-lg my-4 ${
-                    speciality === "Gynecologist"
-                      ? "bg-indigo-100 text-black"
-                      : ""
-                  } `}
-                  onClick={() =>
-                    speciality === "Gynecologist"
-                      ? navigate("/doctors")
-                      : navigate("/doctors/Gynecologist")
-                  }
-                >
-                  Gynecologist
-                </li>
-                <li
-                  className={`border text-left py-1 cursor-pointer px-3 rounded-lg my-4 ${
-                    speciality === "Dermatologist"
-                      ? "bg-indigo-100 text-black"
-                      : ""
-                  } `}
-                  onClick={() =>
-                    speciality === "Dermatologist"
-                      ? navigate("/doctors")
-                      : navigate("/doctors/Dermatologist")
-                  }
-                >
-                  Dermatologist
-                </li>
-                <li
-                  className={`border text-left py-1 cursor-pointer px-3 rounded-lg my-4 ${
-                    speciality === "Pediatricians"
-                      ? "bg-indigo-100 text-black"
-                      : ""
-                  } `}
-                  onClick={() =>
-                    speciality === "Pediatricians"
-                      ? navigate("/doctors")
-                      : navigate("/doctors/Pediatricians")
-                  }
-                >
-                  Pediatricians
-                </li>
-                <li
-                  className={`border text-left py-1 cursor-pointer px-3 rounded-lg my-4 ${
-                    speciality === "Neurologist"
-                      ? "bg-indigo-100 text-black"
-                      : ""
-                  } `}
-                  onClick={() =>
-                    speciality === "Neurologist"
-                      ? navigate("/doctors")
-                      : navigate("/doctors/Neurologist")
-                  }
-                >
-                  Neurologist
-                </li>
-                <li
-                  className={`border text-left py-1 cursor-pointer px-3 rounded-lg my-4 ${
-                    speciality === "Gastroenterologist"
-                      ? "bg-indigo-100 text-black"
-                      : ""
-                  } `}
-                  onClick={() =>
-                    speciality === "Gastroenterologist"
-                      ? navigate("/doctors")
-                      : navigate("/doctors/Gastroenterologist")
-                  }
-                >
-                  Gastroenterologist
-                </li>
-              </ul>
-            </div>
+    <div className="px-4 md:px-20 mt-10">
+      {/* ---- FILTER SECTION ---- */}
+      <div className="flex flex-col md:flex-row gap-6">
+        {/* LEFT SIDE FILTER */}
+        <div className="md:w-1/4">
+          <h1 className="font-semibold text-lg mb-4">
+            Browse Doctors by Speciality
+          </h1>
+
+          <ul className="flex md:flex-col flex-wrap gap-3 md:gap-0">
+            {specialties.map((item) => (
+              <li
+                key={item}
+                className={`border py-1 px-3 rounded-lg cursor-pointer text-sm md:text-base ${
+                  speciality === item ? "bg-indigo-100" : ""
+                }`}
+                onClick={() =>
+                  speciality === item
+                    ? navigate("/doctors")
+                    : navigate(`/doctors/${item}`)
+                }
+              >
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* ---- DOCTORS LIST SECTION ---- */}
+        <div className="md:w-3/4 w-full">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+            {filterdoctor.map((doctor) => (
+              <div
+                key={doctor._id}
+                onClick={() => navigate(`/appointment/${doctor._id}`)}
+                className="cursor-pointer bg-white rounded-xl shadow-xl hover:shadow-2xl hover:-translate-y-2 transition-all duration-300"
+              >
+                <img
+                  src={doctor.image}
+                  alt={doctor.name}
+                  className="h-60 w-full object-cover bg-blue-50 rounded-t-xl"
+                />
+
+                <div className="px-4 py-4">
+                  {doctor.available ? (
+                    <p className="text-green-500 font-semibold">Available</p>
+                  ) : (
+                    <p className="text-red-500 font-semibold">Not Available</p>
+                  )}
+
+                  <h1 className="font-semibold text-lg">{doctor.name}</h1>
+                  <p className="text-gray-600 text-sm">{doctor.speciality}</p>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
-        <div className=" right grid gap-8 grid-cols-4 ">
-          {" "}
-          {filterdoctor.map((doctor) => {
-            return (
-              <>
-                <div
-                  className="card bg-base-100 display-block shadow-xl rounded-md hover:scale-105 duration-2000 transition"
-                  onClick={() => navigate(`/appointment/${doctor._id}`)}
-                  key={doctor?._id}
-                >
-                  <div>
-                    <img
-                      src={doctor.image}
-                      alt=""
-                      className="h-[15em] w-full bg-blue-100 rounded-md"
-                    />
-                  </div>
-                  <div className="px-4 py-4">
-                    {doctor.available ? (
-                      <h1 className="text-green-400 font-bold"> Available</h1>
-                    ) : (
-                      <h1 className="text-red-400 font-bold">Not Available</h1>
-                    )}
-                    <h1 className="font-medium text-xl">{doctor.name}</h1>
-                    <p className="text-[1em]">{doctor.speciality}</p>
-                  </div>
-                </div>
-              </>
-            );
-          })}
-        </div>
       </div>
-    </>
+    </div>
   );
 };

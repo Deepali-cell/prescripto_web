@@ -18,8 +18,8 @@ export const MyAppointment = () => {
           },
         }
       );
+
       if (data.success) {
-        // Reverse the appointments and update state
         setAppointments(data.appointments.reverse());
       } else {
         toast.error(data.message);
@@ -41,6 +41,7 @@ export const MyAppointment = () => {
           },
         }
       );
+
       if (data.success) {
         toast.success(data.message);
         setBookedSlots(
@@ -64,66 +65,77 @@ export const MyAppointment = () => {
 
   return (
     <Layout>
-      <h1 className="md:px-10 mb-5 mx-40 font-medium text-2xl">
+      <h1 className="px-4 md:px-10 lg:px-20 mb-5 font-medium text-2xl">
         My Appointment
       </h1>
-      <div className="md:px-10 mb-5">
-        <div>
-          {appointments.length === 0 && (
-            <p className="mx-40 text-center text-gray-500">
-              No appointments found.
-            </p>
-          )}
+
+      <div className="px-4 md:px-10 lg:px-20 mb-5">
+        {appointments.length === 0 && (
+          <p className="text-center text-gray-500">No appointments found.</p>
+        )}
+
+        <div className="flex flex-col gap-6">
           {appointments.map((doc) => (
             <div
-              className="flex justify-between border mx-40 my-2 h-[12em]"
               key={doc._id}
+              className="
+                flex flex-col md:flex-row 
+                justify-between 
+                border rounded-lg 
+                p-4 
+                shadow-sm
+              "
             >
-              <div className="flex items-center justify-center">
+              {/* Doctor Info Section */}
+              <div className="flex gap-4 md:gap-6 items-center">
+                <img
+                  src={doc.doctorData?.image || "/default-doctor.png"}
+                  alt={doc.doctorData?.name || "Doctor"}
+                  className="h-28 w-28 md:h-36 md:w-36 bg-blue-100 object-cover rounded"
+                />
+
                 <div>
-                  {/* Safe check for doctorData and provide fallback image */}
-                  <img
-                    src={doc.doctorData?.image || "/default-doctor.png"}
-                    alt={doc.doctorData?.name || "Doctor"}
-                    className="bg-blue-100 h-[12em]"
-                  />
-                </div>
-                <div>
-                  <div className="px-4">
-                    <h1 className="font-medium text-xl">
-                      {doc.doctorData?.name || "No Name"}
-                    </h1>
-                  </div>
-                  <div className="px-4">
-                    <h1 className="text-gray-500">
-                      Date & Time :{" "}
-                      <span className="text-sm text-black">
-                        {doc.slotDate || "N/A"} | {doc.slotTime || "N/A"}
-                      </span>
-                    </h1>
-                  </div>
+                  <h1 className="font-semibold text-lg">
+                    {doc.doctorData?.name || "No Name"}
+                  </h1>
+
+                  <p className="text-gray-500">
+                    Date & Time:{" "}
+                    <span className="text-black font-medium">
+                      {doc.slotDate || "N/A"} | {doc.slotTime || "N/A"}
+                    </span>
+                  </p>
                 </div>
               </div>
-              <div className="mt-10 mr-10">
+
+              {/* Button Section */}
+              <div className="flex md:flex-col gap-2 mt-4 md:mt-0">
                 {!doc.cancelled && !doc.isCompleted && (
                   <button
-                    className="border border-black hover:bg-red-500 hover:text-white hover:scale-105 transition-all duration-300 px-4 w-full py-2 my-2"
+                    className="
+                      border border-black 
+                      hover:bg-red-500 hover:text-white 
+                      transition-all duration-300 
+                      px-4 py-2 rounded w-full
+                    "
                     onClick={() => cancelAppointment(doc._id, doc.slotTime)}
                   >
                     Cancel Appointment
                   </button>
                 )}
+
                 {doc.cancelled && !doc.isCompleted && (
                   <button
-                    className="border border-black bg-red-500 text-white w-full px-4 py-2 my-2"
+                    className="border border-black bg-red-500 text-white px-4 py-2 rounded w-full"
                     disabled
                   >
-                    Appointment cancelled successfully
+                    Appointment Cancelled
                   </button>
                 )}
+
                 {doc.isCompleted && (
                   <button
-                    className="border border-black bg-green-500 text-white w-full px-4 py-2 my-2"
+                    className="border border-black bg-green-500 text-white px-4 py-2 rounded w-full"
                     disabled
                   >
                     Completed

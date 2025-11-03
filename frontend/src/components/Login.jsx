@@ -38,15 +38,21 @@ export const Login = () => {
   }, [token]);
   return (
     <>
-      <div className="md:px-10 mb-5 mx-20 mt-20 ">
+      <div className="flex justify-center items-center mt-20 px-4">
         <form
           onSubmit={handlesubmit}
-          className="border border-gray-300 rounded-lg px-10 py-2 mx-[22em]"
+          className="w-full max-w-md border border-gray-300 rounded-lg p-6 shadow-sm"
         >
           <div>
-            <h1 className="text-gray-500 font-medium text-2xl py-2">Login</h1>
-            <p>Please Login to book appointment</p>
+            <h1 className="text-gray-700 font-semibold text-3xl py-2 text-center">
+              Login
+            </h1>
+            <p className="text-center text-gray-500">
+              Please login to book an appointment
+            </p>
           </div>
+
+          {/* Email Input */}
           <label className="input input-bordered flex items-center gap-2 my-4">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -65,6 +71,8 @@ export const Login = () => {
               value={email}
             />
           </label>
+
+          {/* Password Input */}
           <label className="input input-bordered flex items-center gap-2 my-4">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -81,21 +89,22 @@ export const Login = () => {
             <input
               type="password"
               className="grow"
-              placeholder="password"
+              placeholder="Password"
               onChange={(e) => setpassword(e.target.value)}
               value={password}
             />
           </label>
-          <div className="flex items-center justify-center my-4">
-            <button
-              type="submit"
-              className="bg-blue-500 px-10 rounded-md w-full  py-2 text-white  "
-            >
-              Login Account
-            </button>
-          </div>
-          <p className="text-left">
-            Create an new account?
+
+          {/* Button */}
+          <button
+            type="submit"
+            className="bg-blue-500 px-5 rounded-md w-full py-2 text-white mt-4 hover:bg-blue-600 transition"
+          >
+            Login Account
+          </button>
+
+          <p className="text-center mt-4">
+            Don’t have an account?{" "}
             <a href="/signup" className="text-blue-500 underline">
               Click here
             </a>
