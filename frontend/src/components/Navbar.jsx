@@ -74,7 +74,7 @@ export const Navbar = () => {
               className="bg-blue-600 px-3 py-1 rounded text-white"
               onClick={() => navigate("/register")}
             >
-              Create User
+              Book An Appointment
             </button>
           )}
         </div>
@@ -156,7 +156,7 @@ export const Navbar = () => {
                 setOpenMenu(false);
               }}
             >
-              Create User
+              Book An Appointment
             </button>
           )}
         </div>
