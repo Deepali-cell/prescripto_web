@@ -25,6 +25,8 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 
+
+
 app.get("/", (req, res) => {
   res.send("Backend is working ✅");
 });

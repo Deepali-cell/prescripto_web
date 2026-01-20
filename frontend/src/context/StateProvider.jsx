@@ -11,17 +11,25 @@ const StateProvider = ({ children }) => {
   const [token, settoken] = useState(localStorage.getItem("usertoken") || null);
   const [userData, setuserData] = useState(null);
 
+  const [loadingDoctors, setLoadingDoctors] = useState(false);
+
   const getAllDoctors = async () => {
+    // 🔥 CACHE CHECK (ye main fix hai)
+    if (doctors.length > 0) return;
+
     try {
+      setLoadingDoctors(true);
       const { data } = await axios.get(`${backend_url}/api/doctor/list`);
+
       if (data.success) {
         setDoctors(data.doctors);
       } else {
         toast.error(data.message);
       }
     } catch (error) {
-      console.error(error);
-      toast.error("Error fetching doctors. Please try again later.");
+      toast.error("Error fetching doctors");
+    } finally {
+      setLoadingDoctors(false);
     }
   };
 
@@ -57,11 +65,9 @@ const StateProvider = ({ children }) => {
     getUser,
     bookedSlots,
     setBookedSlots,
+    loadingDoctors,
+    setLoadingDoctors,
   };
-
-  useEffect(() => {
-    getAllDoctors();
-  }, []);
 
   useEffect(() => {
     getUser();

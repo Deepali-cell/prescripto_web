@@ -15,6 +15,7 @@ export const RelatedDoctors = ({ speciality, docId }) => {
     setRelatedDoc(docs);
   };
 
+  
   useEffect(() => {
     filterRelatedDoctors();
   }, [doctors, docId, speciality]);

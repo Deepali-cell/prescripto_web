@@ -5,13 +5,14 @@ import { useNavigate, useParams } from "react-router-dom";
 export const AllDoctors = () => {
   const { speciality } = useParams();
   const [filterdoctor, setfilterdoctor] = useState([]);
-  const { doctors } = useContext(myContext);
+  const { doctors, loadingDoctors } = useContext(myContext);
+
   const navigate = useNavigate();
 
   const handlefilterdoctor = () => {
     if (speciality) {
       const doctor = doctors.filter(
-        (doctor) => doctor.speciality === speciality
+        (doctor) => doctor.speciality === speciality,
       );
       setfilterdoctor(doctor);
     } else {
@@ -31,6 +32,13 @@ export const AllDoctors = () => {
     "Neurologist",
     "Gastroenterologist",
   ];
+  if (loadingDoctors) {
+    return (
+      <div className="px-4 md:px-20 mt-24">
+        <p className="text-center text-gray-500">Loading doctors...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="px-4 md:px-20 mt-10">

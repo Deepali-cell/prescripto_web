@@ -1,11 +1,24 @@
 import { useNavigate } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { myContext } from "../context/StateProvider";
 
 export const TopDoctors = () => {
   const navigate = useNavigate();
-  const { doctors } = useContext(myContext);
+  const { doctors, getAllDoctors, loadingDoctors } = useContext(myContext);
 
+  useEffect(() => {
+    if (doctors.length === 0) {
+      getAllDoctors();
+    }
+  }, []);
+
+  if (loadingDoctors) {
+    return (
+      <div className="px-4 md:px-20 mt-24">
+        <p className="text-center text-gray-500">Loading doctors...</p>
+      </div>
+    );
+  }
   return (
     <div className="px-4 md:px-20 mt-24">
       <div className="text-center">
