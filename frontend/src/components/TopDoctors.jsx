@@ -30,7 +30,7 @@ export const TopDoctors = () => {
 
       {/* Responsive Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mt-10">
-        {doctors.slice(0, 10).map((doctor) => (
+        {doctors.slice(0, 5).map((doctor) => (
           <div
             key={doctor._id}
             onClick={() => navigate(`/appointment/${doctor._id}`)}
