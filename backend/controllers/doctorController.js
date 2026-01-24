@@ -3,6 +3,13 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import appointmentModal from "../models/appointmentModal.js";
 
+let doctorsCache = {
+  data: null,
+  lastFetched: 0,
+};
+
+const CACHE_TIME = 5 * 60 * 1000; // 5 minutes
+
 const changeAvailability = async (req, res) => {
   try {
     const { docId } = req.body;
@@ -19,8 +26,28 @@ const changeAvailability = async (req, res) => {
 
 const doctorslist = async (req, res) => {
   try {
-    const doctors = await doctorModal.find({}).select(["-password", "-email"]);
-    res.json({ success: true, doctors });
+    const now = Date.now();
+
+    //  Cache hit
+    if (doctorsCache.data && now - doctorsCache.lastFetched < CACHE_TIME) {
+      return res.json({
+        success: true,
+        doctors: doctorsCache.data,
+        cached: true,
+      });
+    }
+
+    const doctors = await doctorModal
+      .find({})
+      .select("-password -email")
+      .lean();
+
+    doctorsCache = {
+      data: doctors,
+      lastFetched: now,
+    };
+
+    res.json({ success: true, doctors, cached: false });
   } catch (error) {
     console.error(error);
     res.status(500).json({ success: false, message: "Internal server error" });
@@ -163,17 +190,15 @@ const updateProfile = async (req, res) => {
     }
     const { line1, line2 } = address;
     if (!line1 || !line2) {
-      return res
-        .status(400)
-        .json({
-          success: false,
-          message: "Address must include line1 and line2",
-        });
+      return res.status(400).json({
+        success: false,
+        message: "Address must include line1 and line2",
+      });
     }
     const updateDoctor = await doctorModal.findByIdAndUpdate(
       doctorId,
       { available, fees, address: { line1, line2 } },
-      { new: true }
+      { new: true },
     );
 
     if (!updateDoctor) {
@@ -181,13 +206,11 @@ const updateProfile = async (req, res) => {
         .status(404)
         .json({ success: false, message: "Doctor not found" });
     }
-    return res
-      .status(200)
-      .json({
-        success: true,
-        message: "Doctor updated successfully",
-        doctorData: updateDoctor,
-      });
+    return res.status(200).json({
+      success: true,
+      message: "Doctor updated successfully",
+      doctorData: updateDoctor,
+    });
   } catch (error) {
     console.error("Error updating doctor:", error);
     return res.status(500).json({ success: false, message: error.message });

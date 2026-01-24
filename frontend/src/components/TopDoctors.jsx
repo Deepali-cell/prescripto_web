@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useContext, useEffect } from "react";
 import { myContext } from "../context/StateProvider";
+import doctorIcon from "../assets/frontend_assets/doctor_icon.png";
 
 export const TopDoctors = () => {
   const navigate = useNavigate();
@@ -37,7 +38,7 @@ export const TopDoctors = () => {
             className="cursor-pointer bg-white rounded-xl shadow-xl hover:shadow-2xl hover:-translate-y-2 transition-all duration-300"
           >
             <img
-              src={doctor.image}
+              src={doctor.image || doctorIcon}
               alt={doctor.name}
               className="h-60 w-full object-cover rounded-t-xl bg-blue-50"
             />

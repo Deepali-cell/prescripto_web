@@ -14,7 +14,7 @@ const StateProvider = ({ children }) => {
   const [loadingDoctors, setLoadingDoctors] = useState(false);
 
   const getAllDoctors = async () => {
-    // 🔥 CACHE CHECK (ye main fix hai)
+    // CACHE CHECK
     if (doctors.length > 0) return;
 
     try {
@@ -68,6 +68,10 @@ const StateProvider = ({ children }) => {
     loadingDoctors,
     setLoadingDoctors,
   };
+
+  useEffect(() => {
+    getAllDoctors();
+  }, []);
 
   useEffect(() => {
     getUser();
