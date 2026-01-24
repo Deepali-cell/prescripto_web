@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { myContext } from "../context/StateProvider";
 import { useNavigate, useParams } from "react-router-dom";
+import doctorIcon from "../assets/frontend_assets/doctor_icon.png";
 
 export const AllDoctors = () => {
   const { speciality } = useParams();
@@ -79,7 +80,7 @@ export const AllDoctors = () => {
                 className="cursor-pointer bg-white rounded-xl shadow-xl hover:shadow-2xl hover:-translate-y-2 transition-all duration-300"
               >
                 <img
-                  src={doctor.image}
+                  src={doctor.image || doctorIcon}
                   alt={doctor.name}
                   className="h-60 w-full object-cover bg-blue-50 rounded-t-xl"
                 />
