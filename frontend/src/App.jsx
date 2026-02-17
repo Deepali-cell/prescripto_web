@@ -28,7 +28,7 @@ export default function App() {
           <Route path="/about" element={<About />} />
 
           {/* Public only if not logged in */}
-          {/* <Route
+           <Route
             path="/login"
             element={
               <PublicRoute>
@@ -43,7 +43,7 @@ export default function App() {
                 <Signup />
               </PublicRoute>
             }
-          /> */}
+          /> 
           <Route
             path="/register"
             element={
